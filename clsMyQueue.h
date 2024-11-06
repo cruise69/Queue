@@ -1,55 +1,78 @@
 #pragma once
-#include <iostream>
-using namespace std;
 
-template <typename T>
+#include <iostream>
+#include "clsDblLinkedList.h"
+
+using namespace std;
+template <class T>
+
 class clsMyQueue
 {
+
 protected:
-    class Node
-    {
-    public:
-        T value;
-        Node *next = NULL;
-        Node *prev = NULL;
-    };
-    Node *head = new Node();
-    unsigned long long _size = 0;
+    clsDblLinkedList<T> _MyList;
 
 public:
-    Node *GetLastNode()
+    void Push(T Item)
     {
-        Node *temp = head;
-        while (temp->next != NULL)
-        {
-            temp = temp->next;
-        }
-        return temp;
+        _MyList.InsertAtTheEnd(Item);
     }
-    void Push(T value)
-    {
-        Node *temp = new Node();
-        temp->value = value;
-        Node *temp2 = GetLastNode();
-        temp2->next = temp;
-        temp->prev = temp2;
-    }
+
     void Pop()
     {
-        Node *toDelete = head->next;
-        Node *toModify = toDelete->next;
-        toModify->prev = toDelete->prev;
-        delete toDelete;
-        toDelete = nullptr;
-        head->next = toModify;
+        _MyList.DeleteFirstNode();
     }
-    void ListNodes()
+
+    void Print()
     {
-        Node *temp = head;
-        while (temp->next != NULL)
-        {
-            temp = temp->next;
-            cout << temp->value << '\n';
-        }
+        _MyList.ListNodes();
+    }
+
+    int Size()
+    {
+        return _MyList.Size();
+    }
+
+    bool IsEmpty()
+    {
+        return _MyList.IsEmpty();
+    }
+
+    T front()
+    {
+        return _MyList.GetItem(0);
+    }
+
+    T back()
+    {
+        return _MyList.GetItem(Size() - 1);
+    }
+    T GetItem(unsigned long long Index)
+    {
+        return _MyList.GetItem(Index);
+    }
+    void Reverse()
+    {
+        _MyList.Reverse();
+    }
+    void UpdateItem(unsigned long long Index, T value)
+    {
+        _MyList.UpdateItem(value, Index);
+    }
+    void InsertAfter(unsigned long long Index, T value)
+    {
+        _MyList.InsertAfter(_MyList.GetItem(Index), value);
+    }
+    void InsertAtFront(T value)
+    {
+        _MyList.InsertAtTheBegining(value);
+    }
+    void InsertAtBack(T value)
+    {
+        _MyList.InsertAtTheEnd(value);
+    }
+    void Clear()
+    {
+        _MyList.Clear();
     }
 };
